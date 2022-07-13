@@ -18,4 +18,8 @@ public class MainActivity extends AppCompatActivity {
                     .commitNow();
         }
     }
+
+    public static void main(String[] args) {
+        System.out.println("elif");
+    }
 }
