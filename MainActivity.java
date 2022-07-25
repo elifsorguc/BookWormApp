@@ -1,65 +1,76 @@
-package com.example.main_page;
+package com.example.genreselection;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.Menu;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.main_page.databinding.ActivityMainBinding;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+    private CheckBox thriller;
+    private CheckBox cooking;
+    private CheckBox history;
+    private CheckBox fantasy;
+    private CheckBox horror;
+    private CheckBox romance;
+    private CheckBox scifi;
+    private CheckBox comedy;
+
+    private Button mainBtn;
+
+    ArrayList<String> genres = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        thriller = (CheckBox) findViewById(R.id.thrillers_check);
+        cooking = (CheckBox) findViewById(R.id.cooking_check);
+        history = (CheckBox) findViewById(R.id.history_check);
+        fantasy = (CheckBox) findViewById(R.id.fantasy_check);
+        horror = (CheckBox) findViewById(R.id.horror_check);
+        romance = (CheckBox) findViewById(R.id.romance_check);
+        scifi = (CheckBox) findViewById(R.id.sci_checks);
+        comedy = (CheckBox) findViewById(R.id.comedy_check);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+        mainBtn = (Button) findViewById(R.id.main_btn);
+        mainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if (thriller.isChecked()){
+                    genres.add(thriller.getText().toString());
+                }
+                if (cooking.isChecked()){
+                    genres.add(cooking.getText().toString());
+                }
+                if (history.isChecked()) {
+                    genres.add(history.getText().toString());
+                }
+                if (fantasy.isChecked()) {
+                    genres.add(fantasy.getText().toString());
+                }
+                if(horror.isChecked()) {
+                    genres.add(horror.getText().toString());
+                }
+                if(romance.isChecked()) {
+                    genres.add(romance.getText().toString());
+                }
+                if (scifi.isChecked()) {
+                    genres.add(scifi.getText().toString());
+                }
+                if (comedy.isChecked()) {
+                    genres.add(comedy.getText().toString());
+                }
+                Toast.makeText(getApplicationContext(), "Welcome to the main page with genres: " + genres.toString(), Toast.LENGTH_LONG).show();
+
             }
         });
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_notifications, R.id.nav_library, R.id.nav_profile,R.id.nav_library, R.id.nav_friends)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
     }
 }
