@@ -1,59 +1,53 @@
-package com.example.profilepage;
+package com.example.navigation_drawer;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.Toolbar;
+
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button bookLists;
-    private Button pastBooks;
-    private Button favorites;
-    private Button borrowed;
+    MaterialToolbar toolbar;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bookLists = findViewById(R.id.booklists_btn);
-        bookLists.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, bookLists.class);
-                startActivity(intent);
-            }
-        });
 
-        pastBooks = findViewById(R.id.pastBooks_btn);
-        pastBooks.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, pastBooks.class);
-                startActivity(intent);
-            }
-        });
+        toolbar = (MaterialToolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        favorites = findViewById(R.id.favorites_btn);
-        favorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, favorites.class);
-                startActivity(intent);
-            }
-        });
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        borrowed = findViewById(R.id.borrowedbooks_btn);
-        borrowed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, BorrowedBooks.class);
-                startActivity(intent);
-            }
-        });
+        frameLayout = (FrameLayout) findViewById(R.id.main_frameLayout);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        navigationView = (NavigationView) findViewById(R.id.navigation);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            super.onBackPressed();
+        }
     }
 }
